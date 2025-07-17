@@ -1,1 +1,1 @@
-export const BG_IMAGE = require('../assets/bg-dark.png') // Easily swappable
+export const BG_IMAGE = require('@/assets/images/bg-dark.png') // Easily swappable
