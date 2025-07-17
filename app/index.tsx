@@ -28,7 +28,7 @@ export default function Home() {
       {/* Sparkle overlay */}
       <LottieView
         ref={sparkleRef}
-        source={require('@/assets/sparkle.json')}
+        source={require('../assets/animations/sparkle.json')}
         autoPlay
         loop
         style={styles.sparkles}
