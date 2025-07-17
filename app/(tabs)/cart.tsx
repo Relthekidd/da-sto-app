@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
 import { useCartStore } from '@/store/cartStore'
@@ -29,16 +30,17 @@ export default function CartScreen() {
 
   if (items.length === 0) {
     return (
-      <View style={styles.centered}>
-        <Text style={styles.emptyText}>Your cart is empty</Text>
+      <SafeAreaView style={[styles.centered, { backgroundColor: '#000' }]}>
+        <Text style={[styles.emptyText, { color: '#fff' }]}>Your cart is empty</Text>
         <TouchableOpacity onPress={() => router.push('/')}>
           <Text style={styles.shopLink}>Continue Shopping</Text>
         </TouchableOpacity>
-      </View>
+      </SafeAreaView>
     );
   }
 
   return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#000' }}>
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.header}>Shopping Cart</Text>
 
@@ -105,12 +107,13 @@ export default function CartScreen() {
         </TouchableOpacity>
       </View>
     </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: { padding: 16 },
-  header: { fontSize: 28, fontWeight: 'bold', marginBottom: 16 },
+  header: { fontSize: 28, fontWeight: 'bold', marginBottom: 16, color: '#fff' },
 
   card: {
     flexDirection: 'row',
@@ -118,14 +121,14 @@ const styles = StyleSheet.create({
     gap: 12,
     marginBottom: 20,
     padding: 12,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#1f2937',
     borderRadius: 10,
   },
   image: { width: 72, height: 72, borderRadius: 8 },
 
-  name: { fontWeight: 'bold', fontSize: 16 },
-  type: { color: '#666' },
-  weight: { fontSize: 12, color: '#666' },
+  name: { fontWeight: 'bold', fontSize: 16, color: '#fff' },
+  type: { color: '#ccc' },
+  weight: { fontSize: 12, color: '#ccc' },
   price: { color: '#059669', marginTop: 4 },
 
   picker: { height: 40, width: 120, marginTop: 8 },
@@ -133,16 +136,16 @@ const styles = StyleSheet.create({
   summary: {
     marginTop: 24,
     padding: 16,
-    backgroundColor: '#e5f4ed',
+    backgroundColor: '#111827',
     borderRadius: 12,
   },
-  summaryTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 8 },
+  summaryTitle: { fontSize: 20, fontWeight: 'bold', marginBottom: 8, color: '#fff' },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 6,
   },
-  boldText: { fontWeight: 'bold' },
+  boldText: { fontWeight: 'bold', color: '#fff' },
 
   checkoutButton: {
     marginTop: 12,
@@ -151,7 +154,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
   },
-  checkoutText: { color: 'white', fontWeight: 'bold' },
+  checkoutText: { color: '#fff', fontWeight: 'bold' },
 
   centered: {
     flex: 1,
@@ -159,6 +162,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 100,
   },
-  emptyText: { fontSize: 20, marginBottom: 12 },
+  emptyText: { fontSize: 20, marginBottom: 12, color: '#fff' },
   shopLink: { color: '#059669', fontWeight: '600' },
 });

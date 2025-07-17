@@ -49,18 +49,18 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 32,
     paddingHorizontal: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#111827',
   },
   heading: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#111',
+    color: '#fff',
     textAlign: 'center',
     marginBottom: 12,
   },
   subheading: {
     fontSize: 14,
-    color: '#666',
+    color: '#ccc',
     textAlign: 'center',
     maxWidth: 320,
     alignSelf: 'center',
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   iconWrapper: {
-    backgroundColor: '#d1fae5',
+    backgroundColor: '#064e3b',
     padding: 12,
     borderRadius: 9999,
     marginBottom: 12,
@@ -83,12 +83,12 @@ const styles = StyleSheet.create({
   featureTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#111',
+    color: '#fff',
     marginBottom: 4,
   },
   featureDesc: {
     fontSize: 13,
-    color: '#666',
+    color: '#ccc',
     textAlign: 'center',
     paddingHorizontal: 8,
   },

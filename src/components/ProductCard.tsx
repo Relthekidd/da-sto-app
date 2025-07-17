@@ -55,7 +55,7 @@ export default function ProductCard({
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: '#1f2937',
     borderRadius: 12,
     overflow: 'hidden',
     shadowColor: '#000',
@@ -85,11 +85,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#111',
+    color: '#fff',
   },
   subtitle: {
     fontSize: 14,
-    color: '#666',
+    color: '#ccc',
     marginBottom: 8,
   },
   row: {

@@ -39,13 +39,13 @@ export default function ProductDetail() {
     Alert.alert('Added to Cart', `${selectedWeight.weight} of ${product.name}`);
   };
 
-  if (!product) return <Text className="p-4 text-center">Loading product...</Text>;
+  if (!product) return <Text className="p-4 text-center text-white">Loading product...</Text>;
 
   return (
-    <ScrollView className="p-4">
+    <ScrollView className="p-4 bg-black min-h-screen">
       <TouchableOpacity onPress={() => router.back()} className="mb-4 flex-row items-center">
         <ChevronLeft size={20} />
-        <Text className="ml-2 text-base text-gray-600">Back</Text>
+        <Text className="ml-2 text-base text-gray-300">Back</Text>
       </TouchableOpacity>
 
       {/* Product Image with carousel buttons */}
@@ -59,15 +59,15 @@ export default function ProductDetail() {
       </View>
 
       {/* Product Info */}
-      <Text className="text-2xl font-bold mb-2">{product.name}</Text>
-      <Text className="text-gray-700 mb-4">{product.description}</Text>
+      <Text className="text-2xl font-bold mb-2 text-white">{product.name}</Text>
+      <Text className="text-gray-300 mb-4">{product.description}</Text>
 
       {product.effects?.length ? (
         <View className="mb-4">
-          <Text className="font-semibold mb-1">Effects</Text>
+          <Text className="font-semibold mb-1 text-white">Effects</Text>
           <View className="flex-row flex-wrap gap-2">
             {product.effects?.map((effect) => (
-              <Text key={effect} className="px-3 py-1 bg-gray-200 rounded-full text-sm">
+              <Text key={effect} className="px-3 py-1 bg-gray-700 rounded-full text-sm text-white">
                 {effect}
               </Text>
             ))}
@@ -109,8 +109,8 @@ export default function ProductDetail() {
       </TouchableOpacity>
 
       {notification && (
-        <View className="mt-4 bg-green-100 rounded p-3">
-          <Text className="text-green-700 text-sm">{notification}</Text>
+        <View className="mt-4 bg-green-800 rounded p-3">
+          <Text className="text-green-100 text-sm">{notification}</Text>
         </View>
       )}
     </ScrollView>
