@@ -5,8 +5,7 @@ import { ChevronLeft, ChevronRight, ShoppingCart } from 'lucide-react-native';
 import { useCartStore } from '@/store/cartStore';
 import { useNotification } from '@/hooks/useNotification';
 import { Product, WeightOption } from '@/types';
-import { fetchProductById } from '@/lib/data'; // Make sure to implement this
-import { formatCurrency } from '@/lib/utils'; // Optional helper
+import { fetchProductById } from '@/lib/data'
 
 export default function ProductDetail() {
   const { id } = useLocalSearchParams();
@@ -63,18 +62,18 @@ export default function ProductDetail() {
       <Text className="text-2xl font-bold mb-2">{product.name}</Text>
       <Text className="text-gray-700 mb-4">{product.description}</Text>
 
-      {product.effects?.length > 0 && (
+      {product.effects?.length ? (
         <View className="mb-4">
           <Text className="font-semibold mb-1">Effects</Text>
           <View className="flex-row flex-wrap gap-2">
-            {product.effects.map((effect) => (
+            {product.effects?.map((effect) => (
               <Text key={effect} className="px-3 py-1 bg-gray-200 rounded-full text-sm">
                 {effect}
               </Text>
             ))}
           </View>
         </View>
-      )}
+      ) : null}
 
       {/* Weight Options */}
       <View className="mb-6">

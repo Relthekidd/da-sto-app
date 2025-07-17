@@ -1,21 +1,21 @@
 // src/features/shop/ShopScreen.tsx
 import React from 'react'
 import { View, Text, FlatList, StyleSheet } from 'react-native'
-import { useSearchParams } from 'expo-router'
+import { useLocalSearchParams } from 'expo-router'
 import ProductCard from '@/components/ProductCard'
 import CartNotification from '@/components/ui/CartNotification'
 import { useNotification } from '@/hooks/useNotification'
+import { products } from '@/lib/data'
+import type { Product } from '@/types'
 
 
 export default function ShopScreen() {
   // Get the dynamic category from the route
-  const { category } = useSearchParams<{ category: string }>()
+  const { category } = useLocalSearchParams<{ category: string }>()
   const { notification } = useNotification()
 
   // Filter products by category
-  const categoryProducts = products.filter(
-    (p) => p.category === category
-  )
+  const categoryProducts = products.filter((p: Product) => p.category === category)
   const categoryTitle = category
     ? category.charAt(0).toUpperCase() + category.slice(1)
     : 'Shop'

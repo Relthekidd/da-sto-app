@@ -10,9 +10,8 @@ const EMAIL_PUBLIC_KEY = 'LDgGZXL103cOvDqP4';
 export async function sendOrderNotification(orderDetails: OrderDetails) {
   try {
     const itemsList = orderDetails.items
-      .map(
-        (item) =>
-          `${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`
+      .map((item: { name: string; quantity: number; price: number }) =>
+        `${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}`
       )
       .join('\n');
 

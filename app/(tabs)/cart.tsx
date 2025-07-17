@@ -9,12 +9,23 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
-import { useCartStore, CartItem } from '../../store'; // adjust path to your store
+import { useCartStore } from '@/store/cartStore'
+import type { Product, WeightOption } from '@/types'
+
+interface CartItem extends Product {
+  selectedWeight: WeightOption
+  quantity: number
+}
 import { Trash2 } from 'lucide-react-native';
 
 export default function CartScreen() {
-  const router = useRouter();
-  const { items, total, updateQuantity, removeItem } = useCartStore();
+  const router = useRouter()
+  const { items, total, updateQuantity, removeFromCart } = useCartStore((state) => ({
+    items: state.items,
+    total: state.total,
+    updateQuantity: state.updateQuantity,
+    removeFromCart: state.removeFromCart,
+  }))
 
   if (items.length === 0) {
     return (
@@ -51,7 +62,7 @@ export default function CartScreen() {
             <Picker
               selectedValue={item.quantity}
               onValueChange={(value: number) =>
-                updateQuantity(item.id, value)
+                updateQuantity(item.id, item.selectedWeight, value)
               }
               style={styles.picker}
             >
@@ -61,7 +72,9 @@ export default function CartScreen() {
             </Picker>
           </View>
 
-          <TouchableOpacity onPress={() => removeItem(item.id)}>
+          <TouchableOpacity
+            onPress={() => removeFromCart(item.id, item.selectedWeight)}
+          >
             {/* lucide-react-native uses stroke/width */}
             <Trash2 stroke="red" width={20} height={20} />
           </TouchableOpacity>
@@ -79,9 +92,9 @@ export default function CartScreen() {
           <Text>Delivery Fee</Text>
           <Text>$10.00</Text>
         </View>
-        <View style={[styles.row, styles.boldRow]}>
-          <Text>Total</Text>
-          <Text>${(total + 10).toFixed(2)}</Text>
+        <View style={styles.row}>
+          <Text style={styles.boldText}>Total</Text>
+          <Text style={styles.boldText}>${(total + 10).toFixed(2)}</Text>
         </View>
 
         <TouchableOpacity
@@ -129,7 +142,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 6,
   },
-  boldRow: { fontWeight: 'bold' },
+  boldText: { fontWeight: 'bold' },
 
   checkoutButton: {
     marginTop: 12,
