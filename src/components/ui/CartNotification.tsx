@@ -21,12 +21,12 @@ const styles = StyleSheet.create({
     bottom: 20,
     left: 20,
     right: 20,
-    backgroundColor: '#d1fae5',
+    backgroundColor: '#064e3b',
     padding: 12,
     borderRadius: 8,
   },
   text: {
-    color: '#065f46',
+    color: '#d1fae5',
     textAlign: 'center',
   },
 })

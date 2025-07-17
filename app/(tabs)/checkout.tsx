@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
 import { useCartStore } from '@/store/cartStore'
@@ -23,7 +24,7 @@ interface CartItem extends Product {
   selectedWeight: WeightOption
   quantity: number
 }
-import { sendOrderNotification } from '../services/orderNotification';
+import { sendOrderNotification } from '@/services/orderNotification';
 
 export default function CheckoutScreen() {
   const router = useRouter()
@@ -98,6 +99,7 @@ export default function CheckoutScreen() {
   };
 
   return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#000' }}>
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Checkout</Text>
 
@@ -176,24 +178,26 @@ export default function CheckoutScreen() {
       />
       {loading && <ActivityIndicator style={styles.loader} />}
     </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: { padding: 20 },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
+  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20, color: '#fff' },
   lineItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 12,
   },
-  summary: { marginVertical: 8, fontWeight: 'bold' },
+  summary: { marginVertical: 8, fontWeight: 'bold', color: '#fff' },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#333',
     padding: 12,
     borderRadius: 6,
     marginBottom: 12,
+    color: '#fff',
   },
   uploadButton: { marginBottom: 12 },
   uploadText: { color: '#10B981', fontWeight: '600' },

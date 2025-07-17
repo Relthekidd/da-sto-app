@@ -1,6 +1,7 @@
 // src/features/shop/ShopScreen.tsx
 import React from 'react'
 import { View, Text, FlatList, StyleSheet } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import { useLocalSearchParams } from 'expo-router'
 import ProductCard from '@/components/ProductCard'
 import CartNotification from '@/components/ui/CartNotification'
@@ -21,7 +22,7 @@ export default function ShopScreen() {
     : 'Shop'
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: '#000' }]}>
       <Text style={styles.title}>{categoryTitle}</Text>
 
       <FlatList
@@ -43,7 +44,7 @@ export default function ShopScreen() {
       {notification && (
         <CartNotification message={notification} />
       )}
-    </View>
+    </SafeAreaView>
   )
 }
 
@@ -56,6 +57,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 16,
+    color: '#fff',
   },
   row: {
     justifyContent: 'space-between',
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     textAlign: 'center',
-    color: '#666',
+    color: '#ccc',
     marginTop: 20,
   },
   emptyContainer: {

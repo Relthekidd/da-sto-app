@@ -31,12 +31,12 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 32,
     paddingHorizontal: 16,
-    backgroundColor: '#f9fafb',
+    backgroundColor: '#111827',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#111',
+    color: '#fff',
     marginBottom: 16,
   },
   row: {
