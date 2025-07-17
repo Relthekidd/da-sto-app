@@ -2,10 +2,12 @@
 import React from 'react'
 import { View, Text, FlatList, StyleSheet } from 'react-native'
 import ProductCard from '@/components/ProductCard'
+import { products } from '@/lib/data'
+import type { Product } from '@/types'
 
 export default function FeaturedProducts() {
-  const featuredProducts = products.filter(
-    (p) => ['Zoap', 'Dosi Dos', 'Double Queen'].includes(p.name)
+  const featuredProducts = products.filter((p: Product) =>
+    ['Zoap', 'Dosi Dos', 'Double Queen'].includes(p.name)
   )
 
   return (

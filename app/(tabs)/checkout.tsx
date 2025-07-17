@@ -15,12 +15,23 @@ import {
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
-import useCartStore from '../store';                      // default import of your hook
+import { useCartStore } from '@/store/cartStore'
+import type { Product, WeightOption } from '@/types'
+import type { OrderDetails } from '@/types/order'
+
+interface CartItem extends Product {
+  selectedWeight: WeightOption
+  quantity: number
+}
 import { sendOrderNotification } from '../services/orderNotification';
 
 export default function CheckoutScreen() {
-  const router = useRouter();
-  const { items, total, clearCart } = useCartStore();     // no selector arrow
+  const router = useRouter()
+  const { items, total, clearCart } = useCartStore((state) => ({
+    items: state.items,
+    total: state.total,
+    clearCart: state.clearCart,
+  }))
 
   const [formData, setFormData] = useState<{
     name: string;
@@ -62,15 +73,19 @@ export default function CheckoutScreen() {
       const orderDetails = {
         orderId: `ORD-${Date.now()}`,
         customer: { name, address, phone, idPhotoUrl: idPhoto },
-        items,                                        // items is inferred type
+        items: items.map((i) => ({
+          name: i.name,
+          quantity: i.quantity,
+          price: i.selectedWeight.price,
+        })),
         total,
         deliveryFee: 10,
         deliveryInstructions,
         specialRequests,
         timestamp: new Date().toISOString(),
-      };
+      }
 
-      const ok = await sendOrderNotification(orderDetails);
+      const ok = await sendOrderNotification(orderDetails as OrderDetails);
       if (!ok) throw new Error();
 
       clearCart();
@@ -86,7 +101,7 @@ export default function CheckoutScreen() {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Checkout</Text>
 
-      {items.map((item) => (
+      {items.map((item: CartItem) => (
         <View
           key={`${item.id}-${item.selectedWeight.weight}`}
           style={styles.lineItem}
