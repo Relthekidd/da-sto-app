@@ -1,15 +1,24 @@
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useRouter } from 'expo-router'
-import Animated, { FadeIn, ZoomIn, SlideInUp } from 'react-native-reanimated'
+import Animated, { FadeIn, ZoomIn, SlideInUp, withRepeat, withTiming, useSharedValue, useAnimatedStyle } from 'react-native-reanimated'
 import { LinearGradient } from 'expo-linear-gradient'
 import LottieView from 'lottie-react-native'
-import { BG_IMAGE } from '@/constants/images'
-import { useRef } from 'react'
+import { BG_IMAGE, SPARKLE_ANIMATION } from '@/constants/images'
+import { useEffect, useRef } from 'react'
 
 export default function Home() {
   const router = useRouter()
   const sparkleRef = useRef(null)
+
+  // Float animation for the logo
+  const float = useSharedValue(0)
+  const animatedFloat = useAnimatedStyle(() => ({
+    transform: [{ translateY: float.value }],
+  }))
+  useEffect(() => {
+    float.value = withRepeat(withTiming(-10, { duration: 1200 }), -1, true)
+  }, [])
 
   return (
     <ImageBackground
@@ -28,14 +37,16 @@ export default function Home() {
       {/* Sparkle overlay */}
       <LottieView
         ref={sparkleRef}
-        source={require('../assets/animations/sparkle.json')}
+        source={SPARKLE_ANIMATION}
         autoPlay
         loop
         style={styles.sparkles}
       />
 
       <SafeAreaView style={styles.container}>
-        <Animated.View entering={ZoomIn.springify().delay(200)} style={styles.logo}>
+        {/* Floating logo with glow */}
+        <Animated.View entering={ZoomIn.springify().delay(200)} style={[styles.logo, animatedFloat]}>
+          <View style={styles.glow} />
           <Text style={styles.emoji}>🛒</Text>
         </Animated.View>
 
@@ -75,6 +86,17 @@ const styles = StyleSheet.create({
   },
   logo: {
     marginBottom: 16,
+    position: 'relative',
+  },
+  glow: {
+    position: 'absolute',
+    width: 100,
+    height: 100,
+    backgroundColor: '#22c55e55',
+    borderRadius: 50,
+    zIndex: -1,
+    alignSelf: 'center',
+    top: 5,
   },
   emoji: {
     fontSize: 64,
