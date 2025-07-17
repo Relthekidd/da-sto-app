@@ -1,7 +1,6 @@
 // src/features/home/FeaturedProducts.tsx
 import React from 'react'
 import { View, Text, FlatList, StyleSheet } from 'react-native'
-import { products } from '@/constants/products'
 import ProductCard from '@/components/ProductCard'
 
 export default function FeaturedProducts() {

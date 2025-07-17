@@ -2,7 +2,6 @@
 import React from 'react'
 import { View, Text, FlatList, StyleSheet } from 'react-native'
 import { useSearchParams } from 'expo-router'
-import { products } from '@/constants/products'
 import ProductCard from '@/components/ProductCard'
 import CartNotification from '@/components/ui/CartNotification'
 import { useNotification } from '@/hooks/useNotification'
