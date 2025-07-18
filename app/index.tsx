@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useRouter } from 'expo-router'
-import Animated, { FadeIn, ZoomIn, withRepeat, withTiming, useSharedValue, useAnimatedStyle, Easing } from 'react-native-reanimated'
+import Animated, { FadeIn, ZoomIn, withRepeat, withTiming, useSharedValue, useAnimatedStyle, Easing, runOnJS } from 'react-native-reanimated'
 import { LinearGradient } from 'expo-linear-gradient'
 import LottieView from 'lottie-react-native'
 import { BG_IMAGE, SPARKLE_ANIMATION, CART_ICON } from '@/constants/images'
@@ -21,18 +21,32 @@ export default function Home() {
   const animatedGlow = useAnimatedStyle(() => ({
     transform: [{ scale: glowScale.value }],
   }))
+  // Fade out animation when entering the store
+  const screenOpacity = useSharedValue(1)
+  const animatedScreen = useAnimatedStyle(() => ({
+    opacity: screenOpacity.value,
+  }))
+
+  const handleStart = () => {
+    screenOpacity.value = withTiming(0, { duration: 400 }, (finished) => {
+      if (finished) {
+        runOnJS(router.push)('/store')
+      }
+    })
+  }
   useEffect(() => {
     float.value = withRepeat(withTiming(-10, { duration: 1200 }), -1, true)
     glowScale.value = withRepeat(withTiming(1.3, { duration: 1500 }), -1, true)
   }, [])
 
   return (
-    <ImageBackground
-      source={BG_IMAGE}
-      resizeMode="cover"
-      style={styles.bg}
-      imageStyle={{ opacity: 0.2 }}
-    >
+    <Animated.View style={[styles.bg, animatedScreen]}>
+      <ImageBackground
+        source={BG_IMAGE}
+        resizeMode="cover"
+        style={StyleSheet.absoluteFill}
+        imageStyle={{ opacity: 0.2 }}
+      >
       <LinearGradient
         colors={['rgba(0,0,0,0.7)', '#000']}
         style={StyleSheet.absoluteFill}
@@ -84,12 +98,13 @@ export default function Home() {
         </Animated.Text>
 
         <Animated.View entering={FadeIn.delay(800)} style={{ width: '100%' }}>
-          <TouchableOpacity style={styles.button} onPress={() => router.push('/store')}>
+          <TouchableOpacity style={styles.button} onPress={handleStart}>
             <Text style={styles.buttonText}>Start Shopping</Text>
           </TouchableOpacity>
         </Animated.View>
       </SafeAreaView>
     </ImageBackground>
+    </Animated.View>
   )
 }
 
