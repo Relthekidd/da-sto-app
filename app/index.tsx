@@ -24,14 +24,8 @@ export default function Home() {
   const animatedFloat = useAnimatedStyle(() => ({
     transform: [{ translateY: float.value }],
   }))
-  // Pulse animation for the glow circle
-  const glowScale = useSharedValue(1)
-  const animatedGlow = useAnimatedStyle(() => ({
-    transform: [{ scale: glowScale.value }],
-  }))
   useEffect(() => {
     float.value = withRepeat(withTiming(-10, { duration: 1200 }), -1, true)
-    glowScale.value = withRepeat(withTiming(1.3, { duration: 1500 }), -1, true)
   }, [])
 
   return (
@@ -54,16 +48,20 @@ export default function Home() {
         source={SPARKLE_ANIMATION}
         autoPlay
         loop
+        colorFilters={[
+          { keypath: 'Small', color: '#ffffff' },
+          { keypath: 'Medium', color: '#ffffff' },
+          { keypath: 'Big', color: '#ffffff' },
+        ]}
         style={styles.sparkles}
       />
 
       <SafeAreaView style={styles.container}>
-        {/* Floating logo with glow */}
+        {/* Floating logo */}
         <Animated.View
           entering={ZoomIn.springify().delay(200)}
           style={[styles.logo, animatedFloat]}
         >
-          <Animated.View style={[styles.glow, animatedGlow]} />
           <Image source={CART_ICON} style={styles.cartIcon} />
         </Animated.View>
 
@@ -113,19 +111,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  glow: {
-    position: 'absolute',
-    width: 220,
-    height: 220,
-    backgroundColor: '#22c55e55',
-    borderRadius: 110,
-    zIndex: -1,
-    alignSelf: 'center',
-    top: 0,
-  },
   cartIcon: {
-    width: 140,
-    height: 140,
+    width: 200,
+    height: 200,
     resizeMode: 'contain',
   },
   title: {
