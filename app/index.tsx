@@ -1,7 +1,15 @@
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useRouter } from 'expo-router'
-import Animated, { FadeIn, ZoomIn, withRepeat, withTiming, useSharedValue, useAnimatedStyle, Easing } from 'react-native-reanimated'
+import Animated, {
+  FadeIn,
+  ZoomIn,
+  withRepeat,
+  withTiming,
+  useSharedValue,
+  useAnimatedStyle,
+  Easing,
+} from 'react-native-reanimated'
 import { LinearGradient } from 'expo-linear-gradient'
 import LottieView from 'lottie-react-native'
 import { BG_IMAGE, SPARKLE_ANIMATION, CART_ICON } from '@/constants/images'
@@ -16,8 +24,14 @@ export default function Home() {
   const animatedFloat = useAnimatedStyle(() => ({
     transform: [{ translateY: float.value }],
   }))
+  // Pulse animation for the glow circle
+  const glowScale = useSharedValue(1)
+  const animatedGlow = useAnimatedStyle(() => ({
+    transform: [{ scale: glowScale.value }],
+  }))
   useEffect(() => {
     float.value = withRepeat(withTiming(-10, { duration: 1200 }), -1, true)
+    glowScale.value = withRepeat(withTiming(1.3, { duration: 1500 }), -1, true)
   }, [])
 
   return (
@@ -45,8 +59,11 @@ export default function Home() {
 
       <SafeAreaView style={styles.container}>
         {/* Floating logo with glow */}
-        <Animated.View entering={ZoomIn.springify().delay(200)} style={[styles.logo, animatedFloat]}>
-          <View style={styles.glow} />
+        <Animated.View
+          entering={ZoomIn.springify().delay(200)}
+          style={[styles.logo, animatedFloat]}
+        >
+          <Animated.View style={[styles.glow, animatedGlow]} />
           <Image source={CART_ICON} style={styles.cartIcon} />
         </Animated.View>
 
@@ -91,33 +108,35 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   logo: {
-    marginBottom: 16,
+    marginBottom: 24,
     position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   glow: {
     position: 'absolute',
-    width: 100,
-    height: 100,
+    width: 220,
+    height: 220,
     backgroundColor: '#22c55e55',
-    borderRadius: 50,
+    borderRadius: 110,
     zIndex: -1,
     alignSelf: 'center',
-    top: 5,
+    top: 0,
   },
   cartIcon: {
-    width: 64,
-    height: 64,
+    width: 140,
+    height: 140,
     resizeMode: 'contain',
   },
   title: {
-    fontSize: 30,
+    fontSize: 36,
     fontWeight: 'bold',
     color: '#fff',
     marginBottom: 12,
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#ccc',
     marginBottom: 28,
     textAlign: 'center',
@@ -141,8 +160,10 @@ const styles = StyleSheet.create({
   },
   sparkles: {
     position: 'absolute',
-    width: '100%',
-    height: '100%',
+    width: '150%',
+    height: '150%',
+    left: '-25%',
+    top: '-25%',
     zIndex: -1,
   },
 });
