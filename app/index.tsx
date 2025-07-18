@@ -1,7 +1,15 @@
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useRouter } from 'expo-router'
-import Animated, { FadeIn, ZoomIn, withRepeat, withTiming, useSharedValue, useAnimatedStyle, Easing } from 'react-native-reanimated'
+import Animated, {
+  FadeIn,
+  ZoomIn,
+  withRepeat,
+  withTiming,
+  useSharedValue,
+  useAnimatedStyle,
+  Easing,
+} from 'react-native-reanimated'
 import { LinearGradient } from 'expo-linear-gradient'
 import LottieView from 'lottie-react-native'
 import { BG_IMAGE, SPARKLE_ANIMATION, CART_ICON } from '@/constants/images'
@@ -40,13 +48,20 @@ export default function Home() {
         source={SPARKLE_ANIMATION}
         autoPlay
         loop
+        colorFilters={[
+          { keypath: 'Small', color: '#ffffff' },
+          { keypath: 'Medium', color: '#ffffff' },
+          { keypath: 'Big', color: '#ffffff' },
+        ]}
         style={styles.sparkles}
       />
 
       <SafeAreaView style={styles.container}>
-        {/* Floating logo with glow */}
-        <Animated.View entering={ZoomIn.springify().delay(200)} style={[styles.logo, animatedFloat]}>
-          <View style={styles.glow} />
+        {/* Floating logo */}
+        <Animated.View
+          entering={ZoomIn.springify().delay(200)}
+          style={[styles.logo, animatedFloat]}
+        >
           <Image source={CART_ICON} style={styles.cartIcon} />
         </Animated.View>
 
@@ -91,33 +106,25 @@ const styles = StyleSheet.create({
     padding: 24,
   },
   logo: {
-    marginBottom: 16,
+    marginBottom: 24,
     position: 'relative',
-  },
-  glow: {
-    position: 'absolute',
-    width: 100,
-    height: 100,
-    backgroundColor: '#22c55e55',
-    borderRadius: 50,
-    zIndex: -1,
-    alignSelf: 'center',
-    top: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   cartIcon: {
-    width: 64,
-    height: 64,
+    width: 200,
+    height: 200,
     resizeMode: 'contain',
   },
   title: {
-    fontSize: 30,
+    fontSize: 36,
     fontWeight: 'bold',
     color: '#fff',
     marginBottom: 12,
     textAlign: 'center',
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#ccc',
     marginBottom: 28,
     textAlign: 'center',
@@ -141,8 +148,10 @@ const styles = StyleSheet.create({
   },
   sparkles: {
     position: 'absolute',
-    width: '100%',
-    height: '100%',
+    width: '150%',
+    height: '150%',
+    left: '-25%',
+    top: '-25%',
     zIndex: -1,
   },
 });
