@@ -1,15 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useRouter } from 'expo-router'
-import Animated, {
-  FadeIn,
-  ZoomIn,
-  withRepeat,
-  withTiming,
-  useSharedValue,
-  useAnimatedStyle,
-  Easing,
-} from 'react-native-reanimated'
+import Animated, { FadeIn, ZoomIn, withRepeat, withTiming, useSharedValue, useAnimatedStyle, Easing } from 'react-native-reanimated'
 import { LinearGradient } from 'expo-linear-gradient'
 import LottieView from 'lottie-react-native'
 import { BG_IMAGE, SPARKLE_ANIMATION, CART_ICON } from '@/constants/images'
@@ -54,16 +46,20 @@ export default function Home() {
         source={SPARKLE_ANIMATION}
         autoPlay
         loop
+        colorFilters={[
+          { keypath: 'Small', color: '#ffffff' },
+          { keypath: 'Medium', color: '#ffffff' },
+          { keypath: 'Big', color: '#ffffff' },
+        ]}
         style={styles.sparkles}
       />
 
       <SafeAreaView style={styles.container}>
-        {/* Floating logo with glow */}
+        {/* Floating logo */}
         <Animated.View
           entering={ZoomIn.springify().delay(200)}
           style={[styles.logo, animatedFloat]}
         >
-          <Animated.View style={[styles.glow, animatedGlow]} />
           <Image source={CART_ICON} style={styles.cartIcon} />
         </Animated.View>
 
@@ -113,19 +109,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  glow: {
-    position: 'absolute',
-    width: 220,
-    height: 220,
-    backgroundColor: '#22c55e55',
-    borderRadius: 110,
-    zIndex: -1,
-    alignSelf: 'center',
-    top: 0,
-  },
   cartIcon: {
-    width: 140,
-    height: 140,
+    width: 200,
+    height: 200,
     resizeMode: 'contain',
   },
   title: {
