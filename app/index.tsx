@@ -1,10 +1,10 @@
-import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useRouter } from 'expo-router'
-import Animated, { FadeIn, ZoomIn, SlideInUp, withRepeat, withTiming, useSharedValue, useAnimatedStyle } from 'react-native-reanimated'
+import Animated, { FadeIn, ZoomIn, withRepeat, withTiming, useSharedValue, useAnimatedStyle, Easing } from 'react-native-reanimated'
 import { LinearGradient } from 'expo-linear-gradient'
 import LottieView from 'lottie-react-native'
-import { BG_IMAGE, SPARKLE_ANIMATION } from '@/constants/images'
+import { BG_IMAGE, SPARKLE_ANIMATION, CART_ICON } from '@/constants/images'
 import { useEffect, useRef } from 'react'
 
 export default function Home() {
@@ -28,7 +28,7 @@ export default function Home() {
       imageStyle={{ opacity: 0.2 }}
     >
       <LinearGradient
-        colors={['#0f0f0f', '#000']}
+        colors={['rgba(0,0,0,0.7)', '#000']}
         style={StyleSheet.absoluteFill}
         start={{ x: 0.5, y: 0 }}
         end={{ x: 0.5, y: 1 }}
@@ -47,18 +47,24 @@ export default function Home() {
         {/* Floating logo with glow */}
         <Animated.View entering={ZoomIn.springify().delay(200)} style={[styles.logo, animatedFloat]}>
           <View style={styles.glow} />
-          <Text style={styles.emoji}>🛒</Text>
+          <Image source={CART_ICON} style={styles.cartIcon} />
         </Animated.View>
 
         <Animated.Text
-          entering={FadeIn.duration(800).delay(400)}
+          entering={FadeIn.duration(800)
+            .delay(400)
+            .easing(Easing.out(Easing.cubic))
+            .withInitialValues({ opacity: 0, transform: [{ scale: 0.9 }] })}
           style={styles.title}
         >
           Welcome to Da Sto’
         </Animated.Text>
 
         <Animated.Text
-          entering={SlideInUp.delay(600)}
+          entering={FadeIn.duration(800)
+            .delay(600)
+            .easing(Easing.out(Easing.cubic))
+            .withInitialValues({ opacity: 0, transform: [{ translateY: 10 }] })}
           style={styles.subtitle}
         >
           Your delivery, your vibe.
@@ -98,20 +104,22 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     top: 5,
   },
-  emoji: {
-    fontSize: 64,
+  cartIcon: {
+    width: 64,
+    height: 64,
+    resizeMode: 'contain',
   },
   title: {
     fontSize: 30,
     fontWeight: 'bold',
     color: '#fff',
-    marginBottom: 6,
+    marginBottom: 12,
     textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,
     color: '#ccc',
-    marginBottom: 32,
+    marginBottom: 28,
     textAlign: 'center',
   },
   button: {
@@ -137,4 +145,4 @@ const styles = StyleSheet.create({
     height: '100%',
     zIndex: -1,
   },
-})
+});
