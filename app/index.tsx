@@ -80,12 +80,12 @@ export default function Home() {
             .withInitialValues({ opacity: 0, transform: [{ translateY: 10 }] })}
           style={styles.subtitle}
         >
-          Your delivery, your vibe.
+          Conveniently at your fingertips.
         </Animated.Text>
 
         <Animated.View entering={FadeIn.delay(800)} style={{ width: '100%' }}>
           <TouchableOpacity style={styles.button} onPress={() => router.push('/store')}>
-            <Text style={styles.buttonText}>Enter the Shop</Text>
+            <Text style={styles.buttonText}>Start Shopping</Text>
           </TouchableOpacity>
         </Animated.View>
       </SafeAreaView>
