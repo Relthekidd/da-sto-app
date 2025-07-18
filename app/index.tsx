@@ -1,15 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useRouter } from 'expo-router'
-import Animated, {
-  FadeIn,
-  ZoomIn,
-  withRepeat,
-  withTiming,
-  useSharedValue,
-  useAnimatedStyle,
-  Easing,
-} from 'react-native-reanimated'
+import Animated, { FadeIn, ZoomIn, withRepeat, withTiming, useSharedValue, useAnimatedStyle, Easing } from 'react-native-reanimated'
 import { LinearGradient } from 'expo-linear-gradient'
 import LottieView from 'lottie-react-native'
 import { BG_IMAGE, SPARKLE_ANIMATION, CART_ICON } from '@/constants/images'
@@ -24,8 +16,14 @@ export default function Home() {
   const animatedFloat = useAnimatedStyle(() => ({
     transform: [{ translateY: float.value }],
   }))
+  // Pulse animation for the glow circle
+  const glowScale = useSharedValue(1)
+  const animatedGlow = useAnimatedStyle(() => ({
+    transform: [{ scale: glowScale.value }],
+  }))
   useEffect(() => {
     float.value = withRepeat(withTiming(-10, { duration: 1200 }), -1, true)
+    glowScale.value = withRepeat(withTiming(1.3, { duration: 1500 }), -1, true)
   }, [])
 
   return (
